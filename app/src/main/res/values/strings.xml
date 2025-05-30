@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Fundwiseapp</string>
+    <string-array name="transaction_types">
+        <item>Income</item>
+        <item>Expense</item>
+    </string-array>
+    <string-array name="transaction_descriptions">
+        <item>Salary</item>
+        <item>Food</item>
+        <item>Rent</item>
+        <item>Entertainment</item>
+        <item>Other</item>
+    </string-array>
 </resources>

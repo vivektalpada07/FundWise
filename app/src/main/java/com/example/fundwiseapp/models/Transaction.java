@@ -4,19 +4,11 @@ public class Transaction {
     private String id;
     private double amount;
     private String description;
+    private String type;  // Income or Expense
     private long timestamp;
 
-    // Empty constructor for Firestore
     public Transaction() {}
 
-    public Transaction(String id, double amount, String description, long timestamp) {
-        this.id = id;
-        this.amount = amount;
-        this.description = description;
-        this.timestamp = timestamp;
-    }
-
-    // Getters and setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -25,6 +17,12 @@ public class Transaction {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public String getType() {
+        return type != null ? type : "Expense"; // Default to Expense if null
+    }
+
+    public void setType(String type) { this.type = type; }
 
     public long getTimestamp() { return timestamp; }
     public void setTimestamp(long timestamp) { this.timestamp = timestamp; }

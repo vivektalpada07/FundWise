@@ -1,25 +1,22 @@
 package com.example.fundwiseapp.customer;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.fundwiseapp.models.Transaction;
 import com.example.fundwiseapp.R;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.UUID;
+import com.example.fundwiseapp.utils.TransactionUtils;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class CashFlowActivity extends AppCompatActivity {
 
-    private FirebaseFirestore db;
-    private CollectionReference transactionsRef;
-
+    private DatabaseReference transactionsRef;
     private EditText etAmount, etDescription;
     private Button btnAddTransaction;
 
@@ -28,8 +25,10 @@ public class CashFlowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cash_flow);
 
-        db = FirebaseFirestore.getInstance();
-        transactionsRef = db.collection("transactions");
+        FirebaseApp.initializeApp(this);
+        String databaseUrl = "https://fundwiseapp1-default-rtdb.firebaseio.com/";
+        transactionsRef = FirebaseDatabase.getInstance(databaseUrl)
+                .getReference("transactions");
 
         etAmount = findViewById(R.id.etAmount);
         etDescription = findViewById(R.id.etDescription);
@@ -42,8 +41,12 @@ public class CashFlowActivity extends AppCompatActivity {
         String amountStr = etAmount.getText().toString().trim();
         String description = etDescription.getText().toString().trim();
 
-        if (amountStr.isEmpty() || description.isEmpty()) {
-            Toast.makeText(this, "Please enter amount and description", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(amountStr)) {
+            etAmount.setError("Amount required");
+            return;
+        }
+        if (TextUtils.isEmpty(description)) {
+            etDescription.setError("Description required");
             return;
         }
 
@@ -51,26 +54,13 @@ public class CashFlowActivity extends AppCompatActivity {
         try {
             amount = Double.parseDouble(amountStr);
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Invalid amount", Toast.LENGTH_SHORT).show();
+            etAmount.setError("Enter a valid number");
             return;
         }
 
-        Transaction transaction = new Transaction(
-                UUID.randomUUID().toString(),
-                amount,
-                description,
-                System.currentTimeMillis()
-        );
-
-        transactionsRef.document(transaction.getId())
-                .set(transaction)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Transaction added!", Toast.LENGTH_SHORT).show();
-                    etAmount.setText("");
-                    etDescription.setText("");
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Error adding transaction: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+        TransactionUtils.saveTransaction(transactionsRef, amount, description, "cashflow", this, () -> {
+            etAmount.setText("");
+            etDescription.setText("");
+        });
     }
 }

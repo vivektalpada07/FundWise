@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Fundwiseapp"
         tools:targetApi="31">
         <activity
+            android:name=".transactions.TransactionListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".transactions.AddEditTransactionActivity"
+            android:exported="false" />
+        <activity
             android:name=".settings.ProfileSettingsActivity"
             android:exported="false" />
         <activity

@@ -15,17 +15,17 @@
         android:inputType="numberDecimal"
         android:hint="Enter Amount" />
 
-    <EditText
-        android:id="@+id/editType"
+    <Spinner
+        android:id="@+id/spinnerType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Type (income/expense)" />
+        android:layout_marginTop="16dp"/>
 
-    <EditText
-        android:id="@+id/editDescription"
+    <Spinner
+        android:id="@+id/spinnerDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Description" />
+        android:layout_marginTop="16dp"/>
 
     <Button
         android:id="@+id/btnOpenAddTransaction"
@@ -33,5 +33,11 @@
         android:layout_height="wrap_content"
         android:text="Add Transaction"
         android:layout_marginTop="20dp" />
+    <Button
+        android:id="@+id/btnViewTransactions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Transactions"
+        android:layout_marginTop="16dp"/>
 
 </LinearLayout>
