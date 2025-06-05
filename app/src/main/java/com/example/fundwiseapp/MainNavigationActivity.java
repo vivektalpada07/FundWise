@@ -10,30 +10,28 @@ import com.example.fundwiseapp.fragments.LoanFragment;
 import com.example.fundwiseapp.fragments.TransactionFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainNavigationActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNav;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_navigation);
 
-        bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        // Load TransactionFragment by default
+        // Default fragment
         loadFragment(new TransactionFragment());
 
-        bottomNav.setOnItemSelectedListener(item -> {
-            Fragment selectedFragment = null;
-
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment fragment;
             if (item.getItemId() == R.id.nav_transaction) {
-                selectedFragment = new TransactionFragment();
-            } else if (item.getItemId() == R.id.nav_loan) {
-                selectedFragment = new LoanFragment();
+                fragment = new TransactionFragment();
+            } else {
+                fragment = new LoanFragment();
             }
-
-            return loadFragment(selectedFragment);
+            return loadFragment(fragment);
         });
     }
 
