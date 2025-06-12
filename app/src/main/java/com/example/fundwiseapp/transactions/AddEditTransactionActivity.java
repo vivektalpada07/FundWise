@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fundwiseapp.R;
 import com.example.fundwiseapp.models.Transaction;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -134,6 +135,8 @@ public class AddEditTransactionActivity extends AppCompatActivity {
         transaction.setDescription(description);
         transaction.setType(type);
         transaction.setTimestamp(System.currentTimeMillis());
+        transaction.setUserId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
 
         transactionsRef.child(transactionId).setValue(transaction)
                 .addOnSuccessListener(aVoid -> {

@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.firebase.auth.FirebaseAuth;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -54,6 +56,8 @@ public class LoanFragment extends Fragment {
     }
 
     private void fetchTransactionTotals() {
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         transactionRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -62,7 +66,7 @@ public class LoanFragment extends Fragment {
 
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Transaction t = ds.getValue(Transaction.class);
-                    if (t != null) {
+                    if (t != null && currentUserId.equals(t.getUserId())) {
                         if ("Income".equalsIgnoreCase(t.getType())) {
                             totalIncome += t.getAmount();
                         } else {
@@ -70,6 +74,7 @@ public class LoanFragment extends Fragment {
                         }
                     }
                 }
+
 
                 tvIncome.setText("Total Income: ₹" + totalIncome);
                 tvExpenses.setText("Total Expenses: ₹" + totalExpenses);
@@ -81,12 +86,11 @@ public class LoanFragment extends Fragment {
             }
         });
     }
-
     private void checkEligibility() {
         String loanStr = etLoanAmount.getText().toString().trim();
 
         if (loanStr.isEmpty()) {
-            etLoanAmount.setError("Enter loan amount");
+            etLoanAmount.setError("Please enter the loan amount.");
             return;
         }
 
@@ -94,35 +98,42 @@ public class LoanFragment extends Fragment {
         try {
             loanAmount = Double.parseDouble(loanStr);
         } catch (NumberFormatException e) {
-            etLoanAmount.setError("Invalid amount");
+            etLoanAmount.setError("Invalid number format.");
             return;
         }
 
         if (totalIncome <= 0) {
-            tvEligibilityResult.setText("⚠️ Please add income transactions first.");
+            tvEligibilityResult.setText("⚠️ Please enter some income transactions first.");
             tvEligibilityResult.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
             return;
         }
 
         double savings = totalIncome - totalExpenses;
         double ratio = (savings / totalIncome) * 100;
+        double maxLoan = savings * 10;
 
-        String msg = "👉 Income: ₹" + totalIncome + "\n" +
-                "👉 Expenses: ₹" + totalExpenses + "\n" +
-                "💰 Savings: ₹" + savings + " (" + String.format("%.2f", ratio) + "%)\n" +
-                "💸 Requested Loan: ₹" + loanAmount + "\n\n";
+        String msg = "📊 Your Financial Summary:\n"
+                + "🪙 Income: ₹" + totalIncome + "\n"
+                + "💸 Expenses: ₹" + totalExpenses + "\n"
+                + "💰 Savings: ₹" + savings + " (" + String.format("%.2f", ratio) + "%)\n"
+                + "📝 Requested Loan: ₹" + loanAmount + "\n\n";
 
         if (ratio >= 30) {
-            msg += "🎉 Eligible for Loan!\nKeep it up! 😄\nTaanu pagal hai 🤪";
+            msg += "🎉 Congratulations! You're eligible for the loan. 🎯\n"
+                    + "You're managing your money like a pro! 🚀\n";
             tvEligibilityResult.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
         } else if (ratio >= 15) {
-            msg += "⚠️ Partially Eligible.\nReduce expenses or increase income.\nTaanu pagal hai 😜";
+            msg += "⚠️ You're partially eligible for a loan.\n"
+                    + "Try cutting down a few expenses or boosting your income. 📈\n";
             tvEligibilityResult.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
         } else {
-            msg += "❌ Not Eligible.\nTry increasing savings.\nBetter luck next time!\nTaanu pagal hai 😂";
+            msg += "❌ Sorry! You're not eligible right now. 😞\n"
+                    + "Start saving more. Your future self will thank you! 💪\n";
             tvEligibilityResult.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
         }
 
+        msg += "\n😂 Taanu pagal hai 🤪";
         tvEligibilityResult.setText(msg);
     }
+
 }

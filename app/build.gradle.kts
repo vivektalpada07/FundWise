@@ -60,6 +60,8 @@ dependencies {
 
     // ✅ UI Component (already present but kept latest version)
     implementation("com.google.android.material:material:1.11.0")
+// firebase auth
+    implementation("com.google.firebase:firebase-auth:23.2.1")
 
     // ✅ Testing
     testImplementation(libs.junit)
