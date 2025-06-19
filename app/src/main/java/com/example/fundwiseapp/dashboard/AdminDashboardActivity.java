@@ -1,32 +1,24 @@
 package com.example.fundwiseapp.dashboard;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
-
+import android.widget.*;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.fundwiseapp.R;
+import com.example.fundwiseapp.customer.FinancialLessonsActivity;
 import com.example.fundwiseapp.models.User;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
+import com.google.firebase.database.*;
+import java.util.*;
 
 public class AdminDashboardActivity extends AppCompatActivity {
 
     private ListView userListView;
-    private Button btnAddManager;
+    private Button btnAddManager, btnViewLessons, btnRefreshUsers;
     private ArrayList<String> userDisplayList = new ArrayList<>();
     private ArrayList<String> userIdList = new ArrayList<>();
     private DatabaseReference usersRef;
@@ -36,28 +28,34 @@ public class AdminDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashboard);
 
+        // Views
         userListView = findViewById(R.id.userListView);
         btnAddManager = findViewById(R.id.btnAddManager);
+        btnViewLessons = findViewById(R.id.btnManageLessons);
+        btnRefreshUsers = findViewById(R.id.btnRefreshUsers);
+
         usersRef = FirebaseDatabase.getInstance().getReference("users");
 
-        loadUsers();
+        btnAddManager.setOnClickListener(v -> showAddManagerDialog());
+        btnViewLessons.setOnClickListener(v -> startActivity(new Intent(this, FinancialLessonsActivity.class)));
+        btnRefreshUsers.setOnClickListener(v -> loadUsers());
 
         userListView.setOnItemClickListener((parent, view, position, id) -> {
             String selectedUserId = userIdList.get(position);
             usersRef.child(selectedUserId).child("role").setValue("manager")
                     .addOnSuccessListener(unused ->
-                            Toast.makeText(this, "✅ Role set to manager", Toast.LENGTH_SHORT).show())
+                            Toast.makeText(this, "✅ Role updated to Manager", Toast.LENGTH_SHORT).show())
                     .addOnFailureListener(e ->
                             Toast.makeText(this, "❌ Failed to update role", Toast.LENGTH_SHORT).show());
         });
 
-        btnAddManager.setOnClickListener(v -> showAddManagerDialog());
+        loadUsers();
     }
 
     private void loadUsers() {
         usersRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userDisplayList.clear();
                 userIdList.clear();
 
@@ -68,20 +66,22 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
                     if (email == null) continue;
                     if (!"admin".equalsIgnoreCase(role)) {
-                        userDisplayList.add(email + " (Tap to assign manager)");
+                        userDisplayList.add(email + " (" + role + ")");
                         userIdList.add(uid);
                     }
                 }
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(AdminDashboardActivity.this,
-                        android.R.layout.simple_list_item_1, userDisplayList);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        AdminDashboardActivity.this,
+                        android.R.layout.simple_list_item_1,
+                        userDisplayList
+                );
                 userListView.setAdapter(adapter);
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                Toast.makeText(AdminDashboardActivity.this,
-                        "❌ Failed to load users: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(AdminDashboardActivity.this, "❌ Failed to load users", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -99,7 +99,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
                     String email = etEmail.getText().toString().trim();
 
                     if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email)) {
-                        Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "⚠ Please fill all fields", Toast.LENGTH_SHORT).show();
                         return;
                     }
 

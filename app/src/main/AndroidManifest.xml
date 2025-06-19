@@ -3,9 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.fundwiseapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,49 +16,66 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fundwiseapp"
         tools:targetApi="31">
-
-        <!-- Main entry point -->
+        <activity
+            android:name=".customer.FinancialLessonsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.CustomerReportActivity"
+            android:exported="false" /> <!-- Main entry point -->
         <activity
             android:name=".auth.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Registration screen -->
+        </activity> <!-- Registration screen -->
         <activity
             android:name=".auth.RegisterActivity"
-            android:exported="true" />
-
-        <!-- Dashboard activities -->
-        <activity android:name=".dashboard.AdminDashboardActivity" android:exported="false" />
-        <activity android:name=".dashboard.ManagerDashboardActivity" android:exported="false" />
-        <activity android:name=".dashboard.CustomerDashboardActivity" android:exported="false" />
-
-        <!-- Customer features -->
-        <activity android:name=".customer.CashFlowActivity" android:exported="false" />
-        <activity android:name=".customer.LoanRequestActivity" android:exported="false" />
-        <activity android:name=".customer.CreditHistoryActivity" android:exported="false" />
-        <activity android:name=".customer.FinancialTipsActivity" android:exported="false" />
-
-        <!-- Manager/Admin features -->
-        <activity android:name=".manager.CustomerProfileActivity" android:exported="false" />
-        <activity android:name=".admin.LoanApprovalActivity" android:exported="false" />
-
-        <!-- Settings -->
-        <activity android:name=".settings.ProfileSettingsActivity" android:exported="false" />
-
-        <!-- Transactions -->
-        <activity android:name=".transactions.AddEditTransactionActivity" android:exported="false" />
-        <activity android:name=".transactions.TransactionListActivity" android:exported="false" />
-
-        <!-- Main Navigation -->
-        <activity android:name=".MainNavigationActivity" android:exported="false" />
-
-        <!-- Optional: If you still use MainActivity for dev/debug -->
-        <activity android:name=".MainActivity" android:exported="false" />
+            android:exported="true" /> <!-- Dashboard activities -->
+        <activity
+            android:name=".dashboard.AdminDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".dashboard.ManagerDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".dashboard.CustomerDashboardActivity"
+            android:exported="false" /> <!-- Customer features -->
+        <activity
+            android:name=".customer.CashFlowActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.LoanRequestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.CreditHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.FinancialTipsActivity"
+            android:exported="false" /> <!-- Manager/Admin features -->
+        <activity
+            android:name=".manager.CustomerProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.LoanApprovalActivity"
+            android:exported="false" /> <!-- Settings -->
+        <activity
+            android:name=".settings.ProfileSettingsActivity"
+            android:exported="false" /> <!-- Transactions -->
+        <activity
+            android:name=".transactions.AddEditTransactionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".transactions.TransactionListActivity"
+            android:exported="false" /> <!-- Main Navigation -->
+        <activity
+            android:name=".MainNavigationActivity"
+            android:exported="false" /> <!-- Optional: If you still use MainActivity for dev/debug -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

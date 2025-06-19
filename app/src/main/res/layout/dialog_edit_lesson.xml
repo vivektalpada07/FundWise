@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/etEditLessonTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Lesson Title" />
+
+    <EditText
+        android:id="@+id/etEditLessonCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Category" />
+
+    <EditText
+        android:id="@+id/etEditLessonContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Lesson Content"
+        android:minLines="3"
+        android:inputType="textMultiLine" />
+</LinearLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="#F3F3F3"
+    android:layout_marginBottom="12dp">
+
+    <TextView android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="user@example.com"
+        android:textStyle="bold" />
+
+    <TextView android:id="@+id/tvIncome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Income: ₹0" />
+
+    <TextView android:id="@+id/tvExpense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Expense: ₹0" />
+
+    <TextView android:id="@+id/tvSavings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Savings: ₹0" />
+
+    <Button
+        android:id="@+id/btnSendAlert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Alert"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:backgroundTint="#FF5252"
+        android:textColor="#FFF"/>
+</LinearLayout>

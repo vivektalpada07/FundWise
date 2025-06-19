@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/financialLessonRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#FFFFFF"><!-- Important -->
+
+    <!-- Form for Admin/Manager only -->
+    <LinearLayout
+        android:id="@+id/lessonForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/etLessonTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Lesson Title"
+            android:inputType="textCapWords" />
+
+        <EditText
+            android:id="@+id/etLessonContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Lesson Content"
+            android:inputType="textMultiLine"
+            android:minLines="3" />
+
+        <EditText
+            android:id="@+id/etLessonCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Category (e.g., Savings, Investment)" />
+
+
+        <Button
+            android:id="@+id/btnAddLesson"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Lesson"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#1E88E5"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <!-- RecyclerView for All Users -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lessonRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp" />
+</LinearLayout>

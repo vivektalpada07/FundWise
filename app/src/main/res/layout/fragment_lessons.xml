@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <!-- Form (admin/manager only) -->
+    <LinearLayout
+        android:id="@+id/lessonForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/etLessonTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Lesson Title" />
+
+        <EditText
+            android:id="@+id/etLessonContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Lesson Content"
+            android:minLines="3"
+            android:inputType="textMultiLine" />
+
+        <EditText
+            android:id="@+id/etLessonCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Category (e.g. Savings)" />
+
+        <EditText
+            android:id="@+id/etLessonLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Level (Beginner/Advanced)" />
+
+        <EditText
+            android:id="@+id/etLessonDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Duration (e.g. 5 min)" />
+
+        <Button
+            android:id="@+id/btnAddLesson"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Lesson"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#1E88E5"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <!-- All users can view -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lessonRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>
