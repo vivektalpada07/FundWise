@@ -1,53 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <!-- Your existing views here -->
-    <TextView android:id="@+id/tvIncome" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-    <TextView android:id="@+id/tvExpense" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-    <TextView android:id="@+id/tvSavings" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-    <TextView android:id="@+id/tvEligibility" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingTop="8dp"/>
-
-    <EditText
-        android:id="@+id/etLoanAmount"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter loan amount"
-        android:inputType="numberDecimal"/>
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/btnCheckEligibility"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Check Eligibility"/>
+        <!-- Financial Summary -->
+        <TextView android:id="@+id/tvIncome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Income:" />
 
-    <Button
-        android:id="@+id/btnShareReport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Share Report"/>
+        <TextView android:id="@+id/tvExpense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expense:" />
 
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#CCCCCC"
-        android:layout_marginVertical="12dp" />
+        <TextView android:id="@+id/tvSavings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Savings:" />
 
-    <!-- RecyclerView to list saved reports -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Saved Reports:"
-        android:textStyle="bold"
-        android:paddingBottom="8dp"/>
+        <TextView android:id="@+id/tvEligibility"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:textColor="@android:color/black" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvReports"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        <!-- Loan Eligibility Input -->
+        <EditText
+            android:id="@+id/etLoanAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter loan amount"
+            android:inputType="numberDecimal" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnCheckEligibility"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check Eligibility" />
+
+        <Button
+            android:id="@+id/btnShareReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share Report" />
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCCCCC"
+            android:layout_marginVertical="12dp" />
+
+        <!-- 📊 EMI Calculator Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📉 EMI Calculator"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:paddingBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEmiLoanAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Loan Amount"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/etEmiInterestRate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Interest Rate (%)"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/etEmiTenure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tenure (months)"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/btnCalculateEmi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calculate EMI"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvEmiResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textStyle="bold"
+            android:paddingTop="8dp" />
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCCCCC"
+            android:layout_marginVertical="12dp" />
+
+        <!-- RecyclerView to list saved reports -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saved Reports:"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvReports"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+    </LinearLayout>
+</ScrollView>

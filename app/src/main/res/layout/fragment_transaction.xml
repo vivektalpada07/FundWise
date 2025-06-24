@@ -1,120 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollTransaction"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <!-- ✅ Single root LinearLayout -->
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
+        android:id="@+id/scrollTransaction"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <!-- 💸 Transaction Form -->
-        <EditText
-            android:id="@+id/editAmount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Amount"
-            android:inputType="numberDecimal"
-            android:minHeight="48dp"
-            android:padding="12dp"
-            android:background="@android:drawable/editbox_background" />
-
-        <Spinner
-            android:id="@+id/spinnerType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp" />
-
-        <Spinner
-            android:id="@+id/spinnerDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp" />
-
-        <Button
-            android:id="@+id/btnOpenAddTransaction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Transaction"
-            android:layout_marginTop="16dp" />
-
-        <Button
-            android:id="@+id/btnViewTransactions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="View Transactions"
-            android:layout_marginTop="8dp" />
-
-        <!-- 💰 Budget Summary -->
         <LinearLayout
-            android:id="@+id/layoutBudgetSummary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="12dp"
-            android:background="#E8F5E9"
-            android:layout_marginTop="24dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tvIncome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Income: ₹0"
-                android:textStyle="bold"
-                android:textColor="#4CAF50" />
+            <!-- Your form and charts here -->
+            <!-- ... all your views except FrameLayout ... -->
 
-            <TextView
-                android:id="@+id/tvExpense"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/editAmount"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Expenses: ₹0"
-                android:textStyle="bold"
-                android:textColor="#F44336"
-                android:layout_marginTop="4dp" />
+                android:hint="Amount"
+                android:inputType="numberDecimal"
+                android:minHeight="48dp"
+                android:padding="12dp"
+                android:background="@android:drawable/editbox_background" />
 
-            <TextView
-                android:id="@+id/tvSavings"
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/spinnerType"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Savings: ₹0"
-                android:textStyle="bold"
-                android:textColor="#2196F3"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="12dp" />
 
-            <TextView
-                android:id="@+id/tvInsights"
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/spinnerDescription"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="💡 Budget tips will appear here."
-                android:textStyle="italic"
-                android:textColor="#555"
+                android:layout_marginTop="12dp" />
+
+            <Button
+                android:id="@+id/btnOpenAddTransaction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Transaction"
+                android:layout_marginTop="16dp" />
+
+            <Button
+                android:id="@+id/btnViewTransactions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="View Transactions"
                 android:layout_marginTop="8dp" />
+
+            <LinearLayout
+                android:id="@+id/layoutBudgetSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:background="#E8F5E9"
+                android:layout_marginTop="24dp">
+
+                <TextView
+                    android:id="@+id/tvIncome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Income: ₹0"
+                    android:textStyle="bold"
+                    android:textColor="#4CAF50" />
+
+                <TextView
+                    android:id="@+id/tvExpense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Expenses: ₹0"
+                    android:textStyle="bold"
+                    android:textColor="#F44336"
+                    android:layout_marginTop="4dp" />
+
+                <TextView
+                    android:id="@+id/tvSavings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Savings: ₹0"
+                    android:textStyle="bold"
+                    android:textColor="#2196F3"
+                    android:layout_marginTop="4dp" />
+
+                <TextView
+                    android:id="@+id/tvInsights"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💡 Budget tips will appear here."
+                    android:textStyle="italic"
+                    android:textColor="#555"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="16dp" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp" />
+
+            <Button
+                android:id="@+id/btnViewMessages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📩 View Messages"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/purple_500"
+                android:textColor="@android:color/white" />
         </LinearLayout>
+    </ScrollView>
 
-        <!-- 📊 Charts -->
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pieChart"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="16dp" />
+    <!-- FrameLayout outside ScrollView for fragment container -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/barChart"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="32dp" />
-        <Button
-            android:id="@+id/btnViewMessages"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="📩 View Messages"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="@color/purple_500"
-            android:textColor="@android:color/white" />
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

@@ -1,12 +1,8 @@
 package com.example.fundwiseapp;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
-import com.example.fundwiseapp.fragments.LoanFragment;
 import com.example.fundwiseapp.fragments.TransactionFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -29,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
             if (item.getItemId() == R.id.nav_transaction) {
                 selectedFragment = new TransactionFragment();
-            } else if (item.getItemId() == R.id.nav_loan) {
-                selectedFragment = new LoanFragment();
             }
 
             return loadFragment(selectedFragment);

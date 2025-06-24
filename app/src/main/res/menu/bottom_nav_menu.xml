@@ -4,10 +4,7 @@
         android:id="@+id/nav_transaction"
         android:icon="@drawable/ic_transactions"
         android:title="Transactions"/>
-    <item
-        android:id="@+id/nav_loan"
-        android:icon="@drawable/ic_loans"
-        android:title="Loans"/>
+
     <item
         android:id="@+id/nav_stocks"
         android:title="Stocks"

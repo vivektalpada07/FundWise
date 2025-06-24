@@ -26,9 +26,14 @@ import java.util.List;
 
 public class CustomerReportFragment extends Fragment {
 
-    private TextView tvIncome, tvExpense, tvSavings, tvEligibility;
+    private TextView tvIncome, tvExpense, tvSavings, tvEligibility, tvEmiResult;
     private EditText etLoanAmount;
     private Button btnCheckEligibility, btnShareReport;
+
+    // EMI Calculator Fields
+    private EditText etEmiLoanAmount, etEmiInterestRate, etEmiTenure;
+    private Button btnCalculateEmi;
+
     private RecyclerView rvReports;
     private ReportAdapter reportAdapter;
 
@@ -48,6 +53,7 @@ public class CustomerReportFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_customer_report, container, false);
 
+        // Financial Summary
         tvIncome = view.findViewById(R.id.tvIncome);
         tvExpense = view.findViewById(R.id.tvExpense);
         tvSavings = view.findViewById(R.id.tvSavings);
@@ -55,8 +61,16 @@ public class CustomerReportFragment extends Fragment {
         etLoanAmount = view.findViewById(R.id.etLoanAmount);
         btnCheckEligibility = view.findViewById(R.id.btnCheckEligibility);
         btnShareReport = view.findViewById(R.id.btnShareReport);
-        rvReports = view.findViewById(R.id.rvReports);
 
+        // EMI Calculator UI
+        etEmiLoanAmount = view.findViewById(R.id.etEmiLoanAmount);
+        etEmiInterestRate = view.findViewById(R.id.etEmiInterestRate);
+        etEmiTenure = view.findViewById(R.id.etEmiTenure);
+        btnCalculateEmi = view.findViewById(R.id.btnCalculateEmi);
+        tvEmiResult = view.findViewById(R.id.tvEmiResult);
+
+        // Report list
+        rvReports = view.findViewById(R.id.rvReports);
         rvReports.setLayoutManager(new LinearLayoutManager(getContext()));
         reportAdapter = new ReportAdapter(new ArrayList<>());
         rvReports.setAdapter(reportAdapter);
@@ -65,6 +79,7 @@ public class CustomerReportFragment extends Fragment {
 
         btnCheckEligibility.setOnClickListener(v -> checkLoanEligibility());
         btnShareReport.setOnClickListener(v -> shareReport());
+        btnCalculateEmi.setOnClickListener(v -> calculateEMI());
 
         loadReportsFromRoom();
 
@@ -202,5 +217,31 @@ public class CustomerReportFragment extends Fragment {
                 );
             }
         }).start();
+    }
+
+    private void calculateEMI() {
+        String loanStr = etEmiLoanAmount.getText().toString().trim();
+        String rateStr = etEmiInterestRate.getText().toString().trim();
+        String tenureStr = etEmiTenure.getText().toString().trim();
+
+        if (TextUtils.isEmpty(loanStr) || TextUtils.isEmpty(rateStr) || TextUtils.isEmpty(tenureStr)) {
+            Toast.makeText(getContext(), "Please enter all EMI fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            double loanAmount = Double.parseDouble(loanStr);
+            double annualRate = Double.parseDouble(rateStr);
+            int months = Integer.parseInt(tenureStr);
+
+            double monthlyRate = annualRate / 12 / 100;
+            double emi = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, months)) /
+                    (Math.pow(1 + monthlyRate, months) - 1);
+
+            tvEmiResult.setText("💸 Monthly EMI: ₹" + String.format("%.2f", emi));
+
+        } catch (NumberFormatException e) {
+            Toast.makeText(getContext(), "Invalid input format", Toast.LENGTH_SHORT).show();
+        }
     }
 }

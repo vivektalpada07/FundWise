@@ -4,21 +4,27 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.*;
 import android.widget.*;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.fundwiseapp.R;
+import com.example.fundwiseapp.auth.LoginActivity;
 import com.example.fundwiseapp.customer.FinancialLessonsActivity;
+import com.example.fundwiseapp.fragments.AdminPortfolioFragment;
 import com.example.fundwiseapp.models.User;
 import com.google.firebase.database.*;
+
 import java.util.*;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class AdminDashboardActivity extends AppCompatActivity {
 
     private ListView userListView;
-    private Button btnAddManager, btnViewLessons, btnRefreshUsers;
+    private Button btnAddManager, btnViewLessons, btnRefreshUsers, btnViewPortfolios;
     private ArrayList<String> userDisplayList = new ArrayList<>();
     private ArrayList<String> userIdList = new ArrayList<>();
     private DatabaseReference usersRef;
@@ -28,18 +34,38 @@ public class AdminDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashboard);
 
-        // Views
+        // Logout
+        Button btnLogout = findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        });
+
+        // View references
         userListView = findViewById(R.id.userListView);
         btnAddManager = findViewById(R.id.btnAddManager);
         btnViewLessons = findViewById(R.id.btnManageLessons);
         btnRefreshUsers = findViewById(R.id.btnRefreshUsers);
+        btnViewPortfolios = findViewById(R.id.btnViewPortfolios);
 
+        // Firebase
         usersRef = FirebaseDatabase.getInstance().getReference("users");
 
+        // Listeners
         btnAddManager.setOnClickListener(v -> showAddManagerDialog());
         btnViewLessons.setOnClickListener(v -> startActivity(new Intent(this, FinancialLessonsActivity.class)));
         btnRefreshUsers.setOnClickListener(v -> loadUsers());
 
+        // Open Portfolio Fragment
+        btnViewPortfolios.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.admin_fragment_container, new AdminPortfolioFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        // Promote user to manager
         userListView.setOnItemClickListener((parent, view, position, id) -> {
             String selectedUserId = userIdList.get(position);
             usersRef.child(selectedUserId).child("role").setValue("manager")
@@ -49,11 +75,12 @@ public class AdminDashboardActivity extends AppCompatActivity {
                             Toast.makeText(this, "❌ Failed to update role", Toast.LENGTH_SHORT).show());
         });
 
+        // Initial Load
         loadUsers();
     }
 
     private void loadUsers() {
-        usersRef.addValueEventListener(new ValueEventListener() {
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userDisplayList.clear();

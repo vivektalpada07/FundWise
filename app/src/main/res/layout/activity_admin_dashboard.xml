@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="16dp"
     android:layout_width="match_parent"
@@ -35,10 +36,38 @@
         android:text="🔄 Refresh User List"
         android:layout_marginTop="8dp" />
 
+    <Button
+        android:id="@+id/btnViewPortfolios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="📊 View User Portfolios"
+        android:layout_marginTop="8dp" />
+
     <ListView
         android:id="@+id/userListView"
         android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnEditProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="👤 Edit Profile"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🚪 Logout"
+        android:layout_marginTop="8dp" />
+
+    <!-- 🔽 Fragment container for portfolios -->
+    <FrameLayout
+        android:id="@+id/admin_fragment_container"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="8dp" />
 </LinearLayout>

@@ -14,6 +14,19 @@
         android:textStyle="bold"
         android:textColor="#000000"
         android:layout_marginBottom="16dp" />
+    <Button
+        android:id="@+id/btnEditProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="👤 Edit Profile"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🚪 Logout"
+        android:layout_marginTop="16dp"/>
 
     <Button
         android:id="@+id/btnManageLessons"
@@ -21,6 +34,22 @@
         android:layout_height="wrap_content"
         android:text="📚 Manage Financial Lessons"
         android:layout_marginBottom="16dp" />
+    <Button
+        android:id="@+id/btnViewFakePrices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Simulated Prices and Notify Users"
+        android:layout_marginTop="12dp"/>
+    <Button
+        android:id="@+id/btnUpdateMockPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Mock Stock Price"/>
+    <Button
+        android:id="@+id/btnClearMockPrices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clear All Mock Prices"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,6 +58,11 @@
         android:textStyle="bold"
         android:textSize="18sp"
         android:layout_marginBottom="8dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerMockPrices"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerCustomerBudgets"
